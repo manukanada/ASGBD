@@ -18,8 +18,10 @@ SET GLOBAL wait_timeout = 3600;
 2.1
 CREATE ROLE 'rol_consultor'
 2.2
+#Otorga permisos de lectura para el rol consultor.
 GRANT SELECT ON Tienda_informatica_reparaciones.* TO 'rol_consultor';
 2.3 
+#Asigna el rol de consultor al usuario auditor_externo.
 GRANT 'rol_consultor' TO 'auditor_externo'@'localhost';
 
 #Tarea 3: Seguridad mediante Vistas y Privilegios Granulares.
@@ -49,15 +51,22 @@ VALUES(100, 'Disco SSD de prueba', 75.00, 1);
 
 #Tarea 5: Auditoría, Resolución de Incidencias y Reflexión Crítica (Apartado de
 Análisis y Razonamiento)
-
 5.1
 SHOW GRANTS FOR 'auditor_externo'@'%';
 SHOW GRANTS FOR 'rol_consultor';
 SELECT CURRENT_ROLE();
 5.2
+#Los permisos ALL PRIVILEGES no se deberia utilizar en ningun entorno
+#ya que cualquier vurnerabilidad de la seguridad de la empresa podría 
+#resultar en que el hacker/ciberdelincuente utilizando metodos de hacking 
+#como la inyección sql (donde un atacante introduce código SQL manipulando
+#la base de datos haciendo creer que puede entrar) tuviera acceso a todos los 
+#datos de la empresa, pudiendo modificarlos, eliminarlos o incluso 
+#robarlos. Si los permisos están limitados los daños serán menores.
 5.3
 #Si eliminamos WITH CHECK OPTION, podremos insertar artícuulos cuyo 
-#precio sea superior a 50 € a través de la vista, aunque no cumplan su 
-#condición. El registro se guardará en la tabla original articulos, 
-#pero no aparecerá en la vista porque no cumple el filtro precio <= 50.00.
+#precio sea superior a 50 € a través de la vista, aunque no cumplan esa 
+#condición lo que genera una inconsistencia lógica. El registro se guardará 
+#en la tabla original articulos, pero no aparecerá en la vista porque 
+#no cumple el filtro precio <= 50.00.
 
