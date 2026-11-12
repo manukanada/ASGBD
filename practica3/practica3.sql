@@ -23,6 +23,8 @@ GRANT SELECT ON Tienda_informatica_reparaciones.* TO 'rol_consultor';
 2.3 
 #Asigna el rol de consultor al usuario auditor_externo.
 GRANT 'rol_consultor' TO 'auditor_externo'@'localhost';
+SET DEFAULT ROLE 'rol_consultor'
+FOR 'auditor_externo'@'localhost';
 
 #Tarea 3: Seguridad mediante Vistas y Privilegios Granulares.
 3.1
